@@ -1,0 +1,21 @@
+version: "3.2"
+services:
+  mssql:
+    container_name: mssql
+    restart: always
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: ${DB_PASS}
+      ACCEPT_EULA: "Y"
+      TZ: America/Manaus
+    volumes:
+      - "./mssqldata:/var/opt/mssql/data"
+      - "./mssqllog:/var/opt/mssql/log"
+      - "./mssqlbackup:/var/opt/mssql/backup"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+    env_file:
+      - .env
